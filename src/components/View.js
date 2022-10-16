@@ -1,16 +1,25 @@
-import {useHistory, useRouteMatch} from "react-router-dom";
+import {useHistory, useParams, useRouteMatch} from "react-router-dom";
+import style from "./style.module.css"
 
 export const View = (props) => {
     const match = useRouteMatch("/list/:id");
-    const display = !!match || props.width > 1000;
+    const display = props.width > 1000;
     const history = useHistory();
-
-    return (<div>
+    const {id} = useParams();
+    if (!!match) return (<div className={style.splitElemContent}>
+        <button onClick={() => history.push('/list')}>back</button>
         <div>
-            {!!match ? "Display Content: " + display.toString() : "Display Placeholder: " + display.toString()}
+            {"Display Content: " + display.toString()}
         </div>
-        <div>{props.width}</div>
-        {!!match ? <button onClick={() => history.goBack()}>back</button> :
-            <button onClick={() => history.push('1')}>content</button>}
+        <div>{"Content #" + id}</div>
+        <div>{"Width: " + props.width}</div>
     </div>)
+    if (!!!match && display) return (
+        <div className={style.splitElemContent}>
+            <div>
+                {"Display Content: " + !!match}
+            </div>
+            Select content
+        </div>
+    )
 }

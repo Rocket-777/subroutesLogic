@@ -6,14 +6,17 @@ export const routes = [
     {
         path: "/list",
         component: List,
+
         routes: [
             {
-                path: "/list/",
-                component: View
+                path: "/list",
+                component: View,
+                exact: true
             },
             {
                 path: "/list/:id",
-                component: View
+                component: View,
+                exact: true
             },
 
         ]
